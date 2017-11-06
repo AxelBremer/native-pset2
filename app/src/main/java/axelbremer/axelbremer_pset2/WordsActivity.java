@@ -11,24 +11,32 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class WordsActivity extends AppCompatActivity {
 
     Story story;
-    Integer tot;
+    Random rn;
     Button wordButton;
     TextView wordTextView;
     EditText wordField;
+    String[] assetList = {"madlib0_simple.txt", "madlib1_tarzan.txt", "madlib2_university.txt", "madlib3_clothes.txt", "madlib4_dance.txt"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
 
+        rn = new Random();
+
         try {
-            InputStream is = getAssets().open("madlib0_simple.txt");
+            Integer i = rn.nextInt(4-0+1);
+            InputStream is = getAssets().open(assetList[i]);
             story = new Story(is);
-            tot = story.getPlaceholderCount();
+            Log.d("STORY", story.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,7 +53,7 @@ public class WordsActivity extends AppCompatActivity {
         String text;
         if(!story.isFilledIn()) {
             Integer num = story.getPlaceholderRemainingCount();
-            text = num.toString() + " out of " + tot.toString() + " to go. ";
+            text = num.toString() + " to go. ";
             text += "Please write a " + story.getNextPlaceholder() + ".";
             wordField.setText("");
         } else {
