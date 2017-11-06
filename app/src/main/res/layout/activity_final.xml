@@ -5,26 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="axelbremer.axelbremer_pset2.WordsActivity">
+    tools:context="axelbremer.axelbremer_pset2.FinalActivity">
 
     <TextView
-        android:id="@+id/wordTextView"
+        android:id="@+id/storyView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/wordTextView" />
-
-    <EditText
-        android:id="@+id/wordField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:text="" />
 
     <Button
-        android:id="@+id/wordButton"
+        android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:onClick="wordButtonClicked"/>
+        android:text="@string/backText"
+        android:onClick="backToStart"/>
 </LinearLayout>
