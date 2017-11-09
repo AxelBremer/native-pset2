@@ -18,29 +18,27 @@ import java.util.Random;
 
 public class WordsActivity extends AppCompatActivity {
 
-    Story story;
-    Random rn;
+    public Story story;
     Button wordButton;
     TextView wordTextView;
     EditText wordField;
-    String[] assetList = {"madlib0_simple.txt", "madlib1_tarzan.txt", "madlib2_university.txt", "madlib3_clothes.txt", "madlib4_dance.txt"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
 
-        rn = new Random();
+        Intent intent = getIntent();
 
+        String title = intent.getStringExtra("Title");
+
+        InputStream is = null;
         try {
-            Integer i = rn.nextInt(4-0+1);
-            InputStream is = getAssets().open(assetList[i]);
-            story = new Story(is);
-            Log.d("STORY", story.toString());
+            is = getAssets().open(title);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("STORY", "onCreate: " + story.toString());
+        story = new Story(is);
 
         wordButton = findViewById(R.id.wordButton);
         wordTextView = findViewById(R.id.wordTextView);
@@ -78,5 +76,24 @@ public class WordsActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    /*
+     * This function saves the state of the story in an outState bundle.
+     */
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable("Story", story);
+    }
+
+    /*
+     * This function restores the state of the story from an inState bundle.
+     */
+    public void onRestoreInstanceState(Bundle inState) {
+        super.onRestoreInstanceState(inState);
+
+        story = (Story) inState.getSerializable("Story");
+        nextWord();
     }
 }
